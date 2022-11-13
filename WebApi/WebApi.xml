@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WebApi</name>
+    </assembly>
+    <members>
+        <member name="T:WebApi.Controllers.UserController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.UserController.GetAllUsers">
+            <summary>
+            To get All Users
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.UserController.CreateUser(Model.RequestModels.UserCreateRequest)">
+            <summary>
+            To Create New User
+            </summary>
+            <param name="newUser"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.UserController.UpdateUser(Model.RequestModels.UserUpdateRequest)">
+            <summary>
+            To update existing user details
+            </summary>
+            <param name="userUpdateRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.UserController.DeleteUser(System.Int32)">
+            <summary>
+            To delete existing user
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
