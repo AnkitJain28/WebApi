@@ -25,7 +25,7 @@ namespace WebApi.Controllers
         /// To get All Users
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("getallusers")]
         public async Task<List<UserDTO>> GetAllUsers()
         {
             List<UserDTO> users = await context.Users.Select(u => new UserDTO()
@@ -39,15 +39,36 @@ namespace WebApi.Controllers
             return users;
 
         }
+        /// <summary>
+        /// To get Single User 
+        /// </summary>
+        /// <param name="id">Provide UserId here</param>
+        /// <returns></returns>
+        [HttpGet("getuserdetails")]
+        public async Task<UserDTO> GetUserDetails(int id)
+        {
+            var existingUser =  context.Users.FirstOrDefault(u => u.Userid == id);
+            
+            UserDTO userDTO = new UserDTO()
+            {
+                Id = existingUser.Userid,
+                Name = existingUser.Name,
+                City = existingUser.City,
 
-       
+            };
+
+            return userDTO;
+
+        }
+
+
 
         /// <summary>
         /// To Create New User
         /// </summary>
-        /// <param name="newUser"></param>
+        /// <param name="newUser">Provide User detils here</param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPost("createusers")]
         public async Task<UserDTO> CreateUser(UserCreateRequest newUser)
         {
             User user = new User()
@@ -56,7 +77,7 @@ namespace WebApi.Controllers
                 MoblieNumber = newUser.MoblieNumber,
                 City = newUser.City,
             };
-            
+
             context.Users.Add(user);
             await context.SaveChangesAsync();
 
@@ -64,7 +85,7 @@ namespace WebApi.Controllers
             {
                 Id = user.Userid,
                 Name = user.Name,
-                City= user.City,
+                City = user.City,
 
             };
 
@@ -75,18 +96,18 @@ namespace WebApi.Controllers
         /// <summary>
         /// To update existing user details
         /// </summary>
-        /// <param name="userUpdateRequest"></param>
+        /// <param name="userUpdateRequest">Provide Update Parameters Here</param>
         /// <returns></returns>
-        [HttpPut]
+        [HttpPut("updateusers")]
         public  IActionResult UpdateUser(UserUpdateRequest userUpdateRequest)
         {
-            User existingUser = (User)context.Users.Where(u => u.Userid == userUpdateRequest.Id);
-
+            // User existingUser = (User)context.Users.Where(u => u.Userid == userUpdateRequest.Id);
+            var existingUser = context.Users.FirstOrDefault(u => u.Userid == userUpdateRequest.Id);
             if (existingUser != null)
             {
-                existingUser.Name = userUpdateRequest.Name;
-                existingUser.City = userUpdateRequest.City;
-                existingUser.MoblieNumber = userUpdateRequest.MoblieNumber;
+                if (userUpdateRequest.Name != null) existingUser.Name = userUpdateRequest.Name;
+                if (userUpdateRequest.City != null) existingUser.City = userUpdateRequest.City;
+                if (userUpdateRequest.MoblieNumber != null) existingUser.MoblieNumber = userUpdateRequest.MoblieNumber;
 
                 context.SaveChanges();
             }
@@ -101,9 +122,9 @@ namespace WebApi.Controllers
         /// <summary>
         /// To delete existing user
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">Provide UserId here</param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpDelete("deleteusers")]
         public IActionResult DeleteUser(int id)
         {
             if (id <= 0)

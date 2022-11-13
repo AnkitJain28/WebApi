@@ -15,25 +15,32 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Controllers.UserController.GetUserDetails(System.Int32)">
+            <summary>
+            To get Single User 
+            </summary>
+            <param name="id">Provide UserId here</param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Controllers.UserController.CreateUser(Model.RequestModels.UserCreateRequest)">
             <summary>
             To Create New User
             </summary>
-            <param name="newUser"></param>
+            <param name="newUser">Provide User detils here</param>
             <returns></returns>
         </member>
         <member name="M:WebApi.Controllers.UserController.UpdateUser(Model.RequestModels.UserUpdateRequest)">
             <summary>
             To update existing user details
             </summary>
-            <param name="userUpdateRequest"></param>
+            <param name="userUpdateRequest">Provide Update Parameters Here</param>
             <returns></returns>
         </member>
         <member name="M:WebApi.Controllers.UserController.DeleteUser(System.Int32)">
             <summary>
             To delete existing user
             </summary>
-            <param name="id"></param>
+            <param name="id">Provide UserId here</param>
             <returns></returns>
         </member>
     </members>
