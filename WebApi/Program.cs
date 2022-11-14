@@ -1,6 +1,9 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Model.DBModels;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,8 +20,8 @@ builder.Services.AddSwaggerGen(options =>
     {
 
         Version = "v1",
-        Title = "ToDo API",
-        Description = "An ASP.NET Core Web API for managing ToDo items",
+        Title = "User API",
+        Description = "An ASP.NET Core Web API for managing Users",
         TermsOfService = new Uri("https://example.com/terms"),
         Contact = new OpenApiContact
         {
@@ -32,15 +35,29 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
     // using System.Reflection;
-    var xmlFilename = $"WebApi.xml";
-    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
-    //var xmlModel = $"Model.xml";
-    //options.IncludeXmlComments();
+    var xmlWebApi = $"WebApi.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlWebApi));
+    var xmlModel = $"Model.xml";
+    options.IncludeXmlComments(Path.Combine("C:\\Users\\Ankit Jain\\source\\repos\\WebApi\\Model\\bin\\Debug\\net6.0", xmlModel));
+
 });
 
 builder.Services.AddDbContext<ApiAssignmentContext>(options =>
     options.UseSqlServer("Server=(LocalDb)\\MSSQLLocalDB;Database=ApiAssignment;Trusted_Connection=True"));
 
+//JWT Authentication
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+    };
+});
 
 var app = builder.Build();
 
@@ -52,7 +69,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

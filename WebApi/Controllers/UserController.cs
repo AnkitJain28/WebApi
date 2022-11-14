@@ -3,29 +3,35 @@ using Microsoft.EntityFrameworkCore;
 using Model.DBModels;
 using Model.RequestModels;
 using Model.ResponseModels;
-using System.Runtime.CompilerServices;
-
 
 namespace WebApi.Controllers
 {
     /// <summary>
-    /// 
+    /// Users related controller.
     /// </summary>
     [ApiController]
-    [Route("users")]
+    [Route("api/users")]
     public class UserController : ControllerBase
     {
+        /// <summary>
+        /// Instance of <see cref="ApiAssignmentContext"/>.
+        /// </summary>
         private readonly ApiAssignmentContext context;
 
+        /// <summary>
+        /// Intialization <see cref="UserController"/>.
+        /// </summary>
+        /// <param name="context">Instance</param>
         public UserController(ApiAssignmentContext context)
         {
             this.context = context;
         }
+
         /// <summary>
         /// To get All Users
         /// </summary>
-        /// <returns></returns>
-        [HttpGet("getallusers")]
+        /// <returns>Returns list of users.</returns>
+        [HttpGet]
         public async Task<List<UserDTO>> GetAllUsers()
         {
             List<UserDTO> users = await context.Users.Select(u => new UserDTO()
@@ -39,37 +45,40 @@ namespace WebApi.Controllers
             return users;
 
         }
+
         /// <summary>
-        /// To get Single User 
+        /// To get single user by id
         /// </summary>
-        /// <param name="id">Provide UserId here</param>
-        /// <returns></returns>
-        [HttpGet("getuserdetails")]
-        public async Task<UserDTO> GetUserDetails(int id)
+        /// <param name="id">Provide userid here</param>
+        /// <returns>Returns user details</returns>
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUserDetailsByUserId(int id)
         {
-            var existingUser =  context.Users.FirstOrDefault(u => u.Userid == id);
-            
-            UserDTO userDTO = new UserDTO()
+            var existingUser = await context.Users.FirstOrDefaultAsync(u => u.Userid == id);
+
+            if(existingUser != null)
             {
-                Id = existingUser.Userid,
-                Name = existingUser.Name,
-                City = existingUser.City,
+                UserDTO userDTO = new UserDTO()
+                {
+                    Id = existingUser.Userid,
+                    Name = existingUser.Name,
+                    City = existingUser.City,
 
-            };
+                };
 
-            return userDTO;
+                return Ok(userDTO);
+            }  
 
+            return BadRequest();
         }
-
-
 
         /// <summary>
         /// To Create New User
         /// </summary>
-        /// <param name="newUser">Provide User detils here</param>
+        /// <param name="newUser">Provide User details here</param>
         /// <returns></returns>
-        [HttpPost("createusers")]
-        public async Task<UserDTO> CreateUser(UserCreateRequest newUser)
+        [HttpPost]
+        public async Task<UserDTO> CreateUser([FromBody] UserCreateRequest newUser)
         {
             User user = new User()
             {
@@ -78,45 +87,52 @@ namespace WebApi.Controllers
                 City = newUser.City,
             };
 
-            context.Users.Add(user);
+            await context.Users.AddAsync(user);
             await context.SaveChangesAsync();
 
             UserDTO userDTO = new UserDTO()
             {
                 Id = user.Userid,
                 Name = user.Name,
-                City = user.City,
-
+                City = user.City
             };
 
             return userDTO;
-
-
         }
-        /// <summary>
-        /// To update existing user details
-        /// </summary>
-        /// <param name="userUpdateRequest">Provide Update Parameters Here</param>
-        /// <returns></returns>
-        [HttpPut("updateusers")]
-        public  IActionResult UpdateUser(UserUpdateRequest userUpdateRequest)
+
+       /// <summary>
+       /// To update existing user details
+       /// </summary>
+       /// <param name="id">Provide userid here</param>
+       /// <param name="userUpdateRequest">Provide user detils here</param>
+       /// <returns></returns>
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(int id, [FromBody] UserUpdateRequest userUpdateRequest)
         {
-            // User existingUser = (User)context.Users.Where(u => u.Userid == userUpdateRequest.Id);
-            var existingUser = context.Users.FirstOrDefault(u => u.Userid == userUpdateRequest.Id);
+            if(userUpdateRequest == null || id != userUpdateRequest.Id)
+            {
+                return BadRequest();
+            }
+
+            var existingUser = await context.Users.FirstOrDefaultAsync(u => u.Userid == userUpdateRequest.Id);
             if (existingUser != null)
             {
-                if (userUpdateRequest.Name != null) existingUser.Name = userUpdateRequest.Name;
+                if (userUpdateRequest.Name != null)
+                {
+                    existingUser.Name = userUpdateRequest.Name;
+                }
+
                 if (userUpdateRequest.City != null) existingUser.City = userUpdateRequest.City;
                 if (userUpdateRequest.MoblieNumber != null) existingUser.MoblieNumber = userUpdateRequest.MoblieNumber;
 
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
             else
             {
                 return NotFound();
             }
 
-            return Ok();
+            return NoContent();
         }
 
         /// <summary>
@@ -124,21 +140,22 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="id">Provide UserId here</param>
         /// <returns></returns>
-        [HttpDelete("deleteusers")]
-        public IActionResult DeleteUser(int id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
         {
             if (id <= 0)
+            {
                 return BadRequest("Not a valid userid");
+            }
 
-            context.Users.Remove(context.Users.FirstOrDefault(u => u.Userid == id));    
-            context.SaveChanges();
-            
+            User user = await context.Users.FirstOrDefaultAsync(u => u.Userid == id);
+            if (user != null)
+            {
+                context.Users.Remove(user);
+                await context.SaveChangesAsync();
+            }     
 
             return Ok();
-
         }
-
-
-       
     }
 }

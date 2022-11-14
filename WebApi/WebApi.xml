@@ -6,34 +6,46 @@
     <members>
         <member name="T:WebApi.Controllers.UserController">
             <summary>
-            
+            Users related controller.
             </summary>
+        </member>
+        <member name="F:WebApi.Controllers.UserController.context">
+            <summary>
+            Instance of <see cref="T:Model.DBModels.ApiAssignmentContext"/>.
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.UserController.#ctor(Model.DBModels.ApiAssignmentContext)">
+            <summary>
+            Intialization <see cref="T:WebApi.Controllers.UserController"/>.
+            </summary>
+            <param name="context">Instance</param>
         </member>
         <member name="M:WebApi.Controllers.UserController.GetAllUsers">
             <summary>
             To get All Users
             </summary>
-            <returns></returns>
+            <returns>Returns list of users.</returns>
         </member>
-        <member name="M:WebApi.Controllers.UserController.GetUserDetails(System.Int32)">
+        <member name="M:WebApi.Controllers.UserController.GetUserDetailsByUserId(System.Int32)">
             <summary>
-            To get Single User 
+            To get single user by id
             </summary>
-            <param name="id">Provide UserId here</param>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:WebApi.Controllers.UserController.CreateUser(Model.RequestModels.UserCreateRequest)">
             <summary>
             To Create New User
             </summary>
-            <param name="newUser">Provide User detils here</param>
+            <param name="newUser">Provide User details here</param>
             <returns></returns>
         </member>
-        <member name="M:WebApi.Controllers.UserController.UpdateUser(Model.RequestModels.UserUpdateRequest)">
+        <member name="M:WebApi.Controllers.UserController.UpdateUser(System.Int32,Model.RequestModels.UserUpdateRequest)">
             <summary>
             To update existing user details
             </summary>
-            <param name="userUpdateRequest">Provide Update Parameters Here</param>
+            <param name="id">Provide userid here</param>
+            <param name="userUpdateRequest">Provide user detils here</param>
             <returns></returns>
         </member>
         <member name="M:WebApi.Controllers.UserController.DeleteUser(System.Int32)">
