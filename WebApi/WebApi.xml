@@ -30,8 +30,8 @@
             <summary>
             To get single user by id
             </summary>
-            <param name="id"></param>
-            <returns></returns>
+            <param name="id">Provide userid here</param>
+            <returns>Returns user details</returns>
         </member>
         <member name="M:WebApi.Controllers.UserController.CreateUser(Model.RequestModels.UserCreateRequest)">
             <summary>
