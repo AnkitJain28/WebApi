@@ -1,0 +1,166 @@
+{
+	"info": {
+		"_postman_id": "b298a0f3-ee75-40de-be5a-b9625ba5a662",
+		"name": "WebApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24347938"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "All Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "text/plain"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7178/api/users",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7178",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "text/plain"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"string\",\n  \"moblieNumber\": \"string\",\n  \"city\": \"string\"\n}"
+						},
+						"url": {
+							"raw": "https://localhost:7178/api/users",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7178",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User details by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7178/api/users/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7178",
+							"path": [
+								"api",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user details",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 1,\n  \"name\": \"Ankit Jain\",\n  \"moblieNumber\": \"9636756942\",\n  \"city\": \"Dungarpur\"\n}"
+						},
+						"url": {
+							"raw": "https://localhost:7178/api/users/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7178",
+							"path": [
+								"api",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user by  id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7178/api/users/3002",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7178",
+							"path": [
+								"api",
+								"users",
+								"3002"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
