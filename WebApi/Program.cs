@@ -38,7 +38,7 @@ builder.Services.AddSwaggerGen(options =>
     var xmlWebApi = $"WebApi.xml";
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlWebApi));
     var xmlModel = $"Model.xml";
-    options.IncludeXmlComments(Path.Combine("C:\\Users\\Ankit Jain\\source\\repos\\WebApi\\Model\\bin\\Debug\\net6.0", xmlModel));
+    options.IncludeXmlComments(Path.Combine("C:\\Users\\ankit.jain\\source\\repos\\AnkitJain28\\WebApi\\Model\\bin\\Debug\\net6.0", xmlModel));
 
 });
 

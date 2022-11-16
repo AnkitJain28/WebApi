@@ -83,7 +83,7 @@ namespace WebApi.Controllers
             User user = new User()
             {
                 Name = newUser.Name,
-                MoblieNumber = newUser.MoblieNumber,
+                MobileNumber = newUser.MobileNumber,
                 City = newUser.City,
             };
 
@@ -123,7 +123,7 @@ namespace WebApi.Controllers
                 }
 
                 if (userUpdateRequest.City != null) existingUser.City = userUpdateRequest.City;
-                if (userUpdateRequest.MoblieNumber != null) existingUser.MoblieNumber = userUpdateRequest.MoblieNumber;
+                if (userUpdateRequest.MobileNumber != null) existingUser.MobileNumber = userUpdateRequest.MobileNumber;
 
                 await context.SaveChangesAsync();
             }

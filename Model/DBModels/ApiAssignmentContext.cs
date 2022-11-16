@@ -28,7 +28,7 @@ public partial class ApiAssignmentContext : DbContext
             entity.ToTable("User");
 
             entity.Property(e => e.City).HasMaxLength(50);
-            entity.Property(e => e.MoblieNumber).HasMaxLength(10);
+            entity.Property(e => e.MobileNumber).HasMaxLength(10);
             entity.Property(e => e.Name).HasMaxLength(20);
         });
 

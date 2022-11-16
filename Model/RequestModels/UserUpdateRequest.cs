@@ -12,7 +12,7 @@ namespace Model.RequestModels
 
         public string? Name { get; set; } 
 
-        public string? MoblieNumber { get; set; }
+        public string? MobileNumber { get; set; }
 
         public string? City { get; set; }
     }
